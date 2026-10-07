@@ -28,11 +28,11 @@
         }
 
         /* 🌈 Bright Chroma Shifts */
-        body.theme-1 { --accent: #3B82F6; --accent-glow: rgba(59, 130, 246, 0.2); } /* Royal Blue */
-        body.theme-2 { --accent: #EC4899; --accent-glow: rgba(236, 72, 153, 0.2); } /* Vibrant Pink */
-        body.theme-3 { --accent: #8B5CF6; --accent-glow: rgba(139, 92, 246, 0.2); } /* Electric Purple */
-        body.theme-4 { --accent: #F59E0B; --accent-glow: rgba(245, 158, 11, 0.2); } /* Amber Gold */
-        body.theme-5 { --accent: #14B8A6; --accent-glow: rgba(20, 184, 166, 0.2); } /* Fresh Teal */
+        body.theme-1 { --accent: #3B82F6; --accent-glow: rgba(59, 130, 246, 0.2); } 
+        body.theme-2 { --accent: #EC4899; --accent-glow: rgba(236, 72, 153, 0.2); } 
+        body.theme-3 { --accent: #8B5CF6; --accent-glow: rgba(139, 92, 246, 0.2); } 
+        body.theme-4 { --accent: #F59E0B; --accent-glow: rgba(245, 158, 11, 0.2); } 
+        body.theme-5 { --accent: #14B8A6; --accent-glow: rgba(20, 184, 166, 0.2); } 
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
@@ -69,7 +69,6 @@
             display: flex; flex-direction: column; position: relative; z-index: 10;
         }
 
-        /* --- Header Hierarchy --- */
         header {
             padding: 35px 20px 25px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
             border-bottom: 1px solid rgba(0,0,0,0.05); position: relative;
@@ -98,7 +97,6 @@
             display: inline-flex; align-items: center; justify-content: center; direction: ltr;
         }
 
-        /* --- Controls (Timer Box Left, Eye Icon Right) --- */
         .time-controls { 
             position: absolute; top: 20px; left: 20px; display: flex; align-items: center; gap: 8px; z-index: 20; 
             direction: ltr; 
@@ -123,7 +121,6 @@
         
         .eye-care-controls { position: absolute; top: 20px; right: 20px; display: flex; gap: 8px; z-index: 20;}
 
-        /* --- Cheers (Professional Alignment) --- */
         .cheer-wrapper { position: fixed; top: -120px; right: 20px; z-index: 99999; pointer-events: none; transition: top 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .cheer-wrapper.show { top: 20px; }
         .cheer-bubble {
@@ -145,7 +142,6 @@
         @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 50% {transform: translateX(5px);} 75% {transform: translateX(-5px);} }
         @keyframes blink { 0%, 100% {opacity:1;} 50% {opacity:0.2;} }
 
-        /* --- Content --- */
         .content-body { padding: 40px 30px; flex: 1; position: relative;}
 
         #start-screen { text-align: center; }
@@ -156,7 +152,6 @@
         .welcome-card h3 { font-size: 26px; font-weight: 900; color: var(--accent); margin-bottom: 15px;}
         .welcome-card p { font-size: 16px; color: var(--text-muted); line-height: 1.8; font-weight: 700;}
 
-        /* Time Attack Button */
         #time-attack-btn {
             background: #FEF2F2; color: var(--error-color); border: 2px dashed rgba(239,68,68,0.3);
             padding: 16px; border-radius: 14px; cursor: pointer; margin-bottom: 25px; font-weight: 800; font-size: 16px; width: 100%; transition: 0.3s;
@@ -180,7 +175,6 @@
 
         #quiz-screen { display: none; }
         
-        /* 🚀 Modified HUD Progress Bar */
         .hud-progress-wrapper {
             background: #FFFFFF; border: 1px solid #E2E8F0;
             border-radius: 16px; padding: 20px 25px 30px 25px; margin-bottom: 35px;
@@ -261,11 +255,9 @@
         .btn-solid:hover { transform: translateY(-3px); box-shadow: 0 15px 35px var(--accent-glow);}
         .btn-solid:disabled { opacity: 0.5; cursor: wait; background: #E2E8F0; color: #94A3B8; box-shadow: none; transform: none;}
 
-        /* --- Smart Revision & Results --- */
         #result-screen { display: none; direction: rtl; }
         .score-card { background: #FFFFFF; border-radius: 24px; padding: 50px 25px; text-align: center; margin-bottom: 40px; border: 1px solid #E2E8F0; box-shadow: 0 20px 50px rgba(0,0,0,0.05); position: relative;}
         
-        /* 🏆 Giant LTR Score Circle */
         .score-circle {
             width: 240px; height: 240px; border-radius: 50%; margin: 0 auto 30px; 
             display: flex; align-items: center; justify-content: center;
@@ -276,7 +268,6 @@
         }
         #score-percent-text { font-family: 'Outfit', 'Cairo'; font-size: 24px; font-weight: 900; color: var(--accent); margin-bottom: 8px; letter-spacing: 1px;}
         
-        /* Result Student Display */
         #student-display-name { font-size: 28px; font-weight: 900; color: var(--text-main); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 15px;}
         .result-avatar { 
             font-size: 35px; background: #F8FAFC; border: 3px solid var(--accent); box-shadow: 0 5px 20px var(--accent-glow);
@@ -316,7 +307,6 @@
         .cheat-content h1 { color: var(--error-color); font-size: 32px; margin-bottom: 20px; font-weight: 900;}
         .cheat-content p { color: var(--text-main); font-size: 18px; line-height: 1.8; font-weight: 700; margin-bottom: 30px;}
 
-        /* --- PDF Print Styles --- */
         @media print {
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-shadow: none !important;}
             body { background: #fff !important; color: #000 !important; }
@@ -454,7 +444,13 @@
                 <p>أنت الآن أمام التقييم النهائي والأضخم. الأسئلة صُممت لتقيس قدرتك على ربط المعاني واستيعاب التفاصيل بدقة. ثق في قدراتك، واقرأ كل كلمة بتمعن. نحن بانتظارك في القمة!<br><br>هل أنت مستعد للبدء؟</p>
             </div>
 
-            <button type="button" id="time-attack-btn" onclick="toggleTimeAttack()">⏳ وضع التحدي السريع (15ث للسؤال): متوقف</button>
+            <h4 style="color: var(--text-main); font-weight: 800; margin-bottom: 15px; text-align: center;">اختار مستوى التحدي الزمني:</h4>
+            <div class="ta-grid">
+                <button type="button" class="btn ta-btn" onclick="setTimeAttack(20, this)">⚡ 20ث (أساطير)</button>
+                <button type="button" class="btn ta-btn" onclick="setTimeAttack(30, this)">🔥 30ث (محترفين)</button>
+                <button type="button" class="btn ta-btn" onclick="setTimeAttack(45, this)">⏳ 45ث (أبطال)</button>
+                <button type="button" class="btn ta-btn active" onclick="setTimeAttack(0, this)">🛑 كلاسيك (وقت مفتوح)</button>
+            </div>
 
             <h4 style="color: var(--text-main); font-weight: 800; margin-bottom: 15px; text-align: center;">اختر مفتاح العبور الخاص بك:</h4>
             <div class="avatar-grid">
@@ -720,6 +716,7 @@ let quizData = [];
 let currentQuestion = 0, userAnswers = {}, studentName = "", selectedAvatar = '🌟';
 let totalSeconds = 3900, qTimeLeft = 15, timerInterval = null, isTimeAttack = false;
 let isSubmitting = false; 
+let pauseCount = 0, isPaused = false; 
 
 // 🛡️ Silent Anti-Cheat
 let cheatWarnings = 0;
@@ -775,6 +772,13 @@ function updateChromaShift() {
     document.body.className = `theme-${levelIndex + 1}`;
 }
 
+function setTimeAttack(level, el) {
+    timeAttackLevel = level;
+    isTimeAttack = (level > 0);
+    document.querySelectorAll('.ta-btn').forEach(btn => btn.classList.remove('active'));
+    el.classList.add('active');
+}
+
 function toggleTimeAttack() {
     isTimeAttack = !isTimeAttack;
     const btn = document.getElementById("time-attack-btn");
@@ -814,7 +818,7 @@ function startQuiz() {
 let typeInterval;
 function loadQuestion() {
     updateChromaShift();
-    if(isTimeAttack) { qTimeLeft = 15; document.getElementById("timer-box").classList.remove("danger"); }
+    if(isTimeAttack) { qTimeLeft = timeAttackLevel || 15; document.getElementById("timer-box").classList.remove("danger"); }
 
     const item = quizData[currentQuestion];
     const optionsList = document.getElementById("options-list");
@@ -859,10 +863,20 @@ function nextQuestion(force = false) {
         currentQuestion++;
         if (currentQuestion % 5 === 0 && currentQuestion !== 0) triggerTeacherCheer();
         loadQuestion();
+        
+        if (isTimeAttack) {
+            startTimer();
+        }
     }
 }
 
-function prevQuestion() { if (currentQuestion > 0) { currentQuestion--; loadQuestion(); } }
+function prevQuestion() { 
+    if (currentQuestion > 0) { 
+        currentQuestion--; 
+        loadQuestion(); 
+        if (isTimeAttack) startTimer();
+    } 
+}
 
 function togglePause() {
     if (isPaused) {
