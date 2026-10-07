@@ -15,7 +15,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     
     <style>
-        /* 🌟 Luminous Nova Theme Variables (Light & Vibrant) */
+        /* 🌟 Luminous Nova Theme Variables */
         :root {
             --bg-light: #F4F7F9;
             --glass-bg: rgba(255, 255, 255, 0.85);
@@ -27,7 +27,6 @@
             --success-color: #10B981;
         }
 
-        /* 🌈 Bright Chroma Shifts */
         body.theme-1 { --accent: #3B82F6; --accent-glow: rgba(59, 130, 246, 0.2); } 
         body.theme-2 { --accent: #EC4899; --accent-glow: rgba(236, 72, 153, 0.2); } 
         body.theme-3 { --accent: #8B5CF6; --accent-glow: rgba(139, 92, 246, 0.2); } 
@@ -87,7 +86,7 @@
         header .slogan { 
             font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 600; font-style: italic; 
             color: var(--accent); letter-spacing: 1px; margin: 5px 0 10px 0; 
-            direction: ltr; unicode-bidi: isolate; display: inline-block;
+            direction: ltr; display: inline-block;
         }
         
         .vip-phone {
@@ -152,14 +151,16 @@
         .welcome-card h3 { font-size: 26px; font-weight: 900; color: var(--accent); margin-bottom: 15px;}
         .welcome-card p { font-size: 16px; color: var(--text-muted); line-height: 1.8; font-weight: 700;}
 
-        #time-attack-btn {
-            background: #FEF2F2; color: var(--error-color); border: 2px dashed rgba(239,68,68,0.3);
-            padding: 16px; border-radius: 14px; cursor: pointer; margin-bottom: 25px; font-weight: 800; font-size: 16px; width: 100%; transition: 0.3s;
-            font-family: 'Outfit', 'Cairo', sans-serif;
+        /* Time Attack Grid Styles */
+        .ta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 30px; }
+        .ta-btn { 
+            background: #FFFFFF; color: var(--text-muted); border: 2px solid #E2E8F0; 
+            padding: 14px; font-size: 16px; border-radius: 14px; font-weight: 800; font-family: 'Outfit', 'Cairo'; transition: 0.3s; cursor: pointer;
         }
-        #time-attack-btn.active {
-            background: var(--error-color); color: #fff; border-style: solid;
-            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3); border-color: var(--error-color);
+        .ta-btn:hover { background: #F8FAFC; color: var(--text-main); }
+        .ta-btn.active { 
+            background: var(--accent-glow); color: var(--accent); border-color: var(--accent); 
+            box-shadow: 0 5px 15px var(--accent-glow); transform: scale(1.02);
         }
 
         .avatar-grid { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;}
@@ -255,6 +256,7 @@
         .btn-solid:hover { transform: translateY(-3px); box-shadow: 0 15px 35px var(--accent-glow);}
         .btn-solid:disabled { opacity: 0.5; cursor: wait; background: #E2E8F0; color: #94A3B8; box-shadow: none; transform: none;}
 
+        /* --- Smart Revision & Results --- */
         #result-screen { display: none; direction: rtl; }
         .score-card { background: #FFFFFF; border-radius: 24px; padding: 50px 25px; text-align: center; margin-bottom: 40px; border: 1px solid #E2E8F0; box-shadow: 0 20px 50px rgba(0,0,0,0.05); position: relative;}
         
@@ -307,6 +309,7 @@
         .cheat-content h1 { color: var(--error-color); font-size: 32px; margin-bottom: 20px; font-weight: 900;}
         .cheat-content p { color: var(--text-main); font-size: 18px; line-height: 1.8; font-weight: 700; margin-bottom: 30px;}
 
+        /* --- PDF Print Styles --- */
         @media print {
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-shadow: none !important;}
             body { background: #fff !important; color: #000 !important; }
@@ -337,6 +340,7 @@
             header img { width: 95px; height: 95px; margin-top: 15px;}
             header h1 { font-size: 24px; }
             
+            .ta-grid { grid-template-columns: 1fr; gap: 10px; }
             .time-controls { top: 12px; left: 12px; gap: 6px;}
             .timer-box { font-size: 14px; height: 38px; padding: 0 12px; }
             .icon-btn { width: 38px; height: 38px; font-size: 16px; }
@@ -387,7 +391,6 @@
 <div class="bg-orb"></div>
 <div class="bg-grid"></div>
 
-<!-- 🛡️ Anti-Cheat Modal -->
 <div id="cheat-modal">
     <div class="cheat-content">
         <h1>🚨 نظام المراقبة الصامت</h1>
@@ -396,7 +399,6 @@
     </div>
 </div>
 
-<!-- ⏸️ Secure Pause Modal -->
 <div id="pause-modal">
     <div class="cheat-content" style="border-color: var(--accent); box-shadow: 0 20px 50px var(--accent-glow);">
         <h1 style="color: var(--accent);">⏸️ إيقاف مؤقت</h1>
@@ -714,7 +716,8 @@ const rawData = [
 
 let quizData = [];
 let currentQuestion = 0, userAnswers = {}, studentName = "", selectedAvatar = '🌟';
-let totalSeconds = 3900, qTimeLeft = 15, timerInterval = null, isTimeAttack = false;
+let timeAttackLevel = 0;
+let totalSeconds = 0, qTimeLeft = 15, timerInterval = null, isTimeAttack = false;
 let isSubmitting = false; 
 let pauseCount = 0, isPaused = false; 
 
@@ -779,16 +782,6 @@ function setTimeAttack(level, el) {
     el.classList.add('active');
 }
 
-function toggleTimeAttack() {
-    isTimeAttack = !isTimeAttack;
-    const btn = document.getElementById("time-attack-btn");
-    if(isTimeAttack) {
-        btn.classList.add("active"); btn.innerText = "⏳ وضع التحدي السريع (15ث): مُفعّل 🔥";
-    } else {
-        btn.classList.remove("active"); btn.innerText = "⏳ وضع التحدي السريع (15ث): متوقف";
-    }
-}
-
 function selectAvatar(el, avatar) {
     document.querySelectorAll('.avatar-option').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected'); selectedAvatar = avatar;
@@ -812,13 +805,28 @@ function startQuiz() {
     document.getElementById("hud-name").innerText = studentName;
     document.getElementById("hud-moving-avatar").innerText = selectedAvatar;
 
-    startTimer(); loadQuestion();
+    totalSeconds = quizData.length * 60; 
+    
+    if (!isTimeAttack) {
+        let m = Math.floor(totalSeconds / 60), s = totalSeconds % 60;
+        let displayM = m < 100 ? (m < 10 ? '0'+m : m) : m;
+        let displayS = s < 10 ? '0'+s : s;
+        document.getElementById("timer-text").innerText = `${displayM}:${displayS}`;
+    }
+
+    loadQuestion();
+    startTimer(); 
 }
 
 let typeInterval;
 function loadQuestion() {
     updateChromaShift();
-    if(isTimeAttack) { qTimeLeft = timeAttackLevel || 15; document.getElementById("timer-box").classList.remove("danger"); }
+    if(isTimeAttack) { 
+        qTimeLeft = timeAttackLevel; 
+        document.getElementById("timer-box").classList.remove("danger"); 
+        let displayS = qTimeLeft < 10 ? '0' + qTimeLeft : qTimeLeft;
+        document.getElementById("timer-text").innerText = `00:${displayS}`;
+    }
 
     const item = quizData[currentQuestion];
     const optionsList = document.getElementById("options-list");
@@ -910,8 +918,11 @@ function startTimer() {
         } else {
             totalSeconds--;
             let m = Math.floor(totalSeconds / 60), s = totalSeconds % 60;
-            document.getElementById("timer-text").innerText = `${m<10?'0'+m:m}:${s<10?'0'+s:s}`;
-            if (totalSeconds <= 300) document.getElementById("timer-box").classList.add("danger");
+            let displayM = m < 100 ? (m < 10 ? '0'+m : m) : m;
+            let displayS = s < 10 ? '0'+s : s;
+            document.getElementById("timer-text").innerText = `${displayM}:${displayS}`;
+            
+            if (totalSeconds <= 300) { document.getElementById("timer-box").classList.add("danger"); }
             if (totalSeconds <= 0) { clearInterval(timerInterval); calculateScore(); }
         }
     }, 1000);
@@ -1010,13 +1021,13 @@ function calculateScore() {
             } catch(e){}
             
             try {
-                let usedTime = isTimeAttack ? "Time Attack" : (3900 - totalSeconds) + " Seconds";
+                let usedTime = isTimeAttack ? "Time Attack" : ( (quizData.length * 60) - totalSeconds) + " Seconds";
                 let wrongAnswersText = wrongAnswersArray.length > 0 
                     ? wrongAnswersArray.join('') 
                     : "<p style='text-align:center; font-weight:bold; color:#10B981; font-size: 16px;'>Excellent! The student made zero mistakes. 🎉</p>";
 
                 sendReportToTeacher(
-                    "Luminous Nova Finale (65 Qs)",
+                    "Luminous Nova Finale (Part 1 - 65 Qs)",
                     studentName, 
                     `${score} / ${quizData.length}`, 
                     percent, 
